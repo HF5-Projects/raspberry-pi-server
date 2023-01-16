@@ -30,12 +30,12 @@ services:
     node:
         restart: unless-stopped
         build:
-            context: './nodeApp'
+            context: './node'
             dockerfile: 'Dockerfile-dev'
         networks:
             - network
-        volumes:    
-            - './nodeApp:/usr/src/app'
+        volumes:
+            - './node:/usr/src/app'
 networks:
     network:
         driver: bridge

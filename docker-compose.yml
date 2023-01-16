@@ -30,7 +30,7 @@ services:
     node:
         restart: unless-stopped
         build:
-            context: './nodeApp'
+            context: './node'
             dockerfile: 'Dockerfile'
         networks:
             - network
