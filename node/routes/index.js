@@ -6,8 +6,4 @@ router.get('/', function(req, res, next) {
   res.status(201).send("Be mdsdsddsyd love");
 });
 
-router.get('/parse', function(req, res, next) {
-  res.send('return asdasdasd mor parse.js');
-});
-
 module.exports = router;
