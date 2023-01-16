@@ -1,10 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var auth = require('../middleware/jwt');
 
 /* GET home page. */
-router.get('/', auth, function(req, res, next) {
-  res.status(201).send("Be mdsdsddsyd love");
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
 });
 
 module.exports = router;
