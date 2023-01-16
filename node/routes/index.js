@@ -6,4 +6,8 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/parse', function(req, res, next) {
+  res.send('return asdasdasd mor parse.js');
+});
+
 module.exports = router;

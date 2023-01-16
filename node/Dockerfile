@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:19
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 # update and install dependency

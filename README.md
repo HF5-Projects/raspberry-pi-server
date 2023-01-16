@@ -24,3 +24,7 @@ Run `docker-compose -f docker-compose-dev.yml exec node|nginx|mariadb /bin/bash`
 
 #### General
 Run `docker volume prune` to remove all unused container volumes. Containers must be stopped and removed for this to work.
+
+# Authentication
+Create an .env file and add the JWT token to the environment variable. Check the .env.sample file for and example.
+Run `docker ps` show all running docker containers status.
