@@ -1,1 +1,1 @@
-TOKEN_SECRET = {token};
+TOKEN_SECRET = {secret};
