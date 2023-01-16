@@ -4,7 +4,7 @@ var auth = require('../middleware/jwt');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.status(201).send("Be mdsdsddsyd love");
 });
 
 module.exports = router;
