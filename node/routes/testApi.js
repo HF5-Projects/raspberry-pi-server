@@ -10,7 +10,7 @@ router.post('/testApi', async function(req, res, next) {
         const conn = await dbconn.getConnection();
         const rows = await conn.query("SELECT * FROM devices");
         conn.release();
-        res.json(rows);
+        res.sendStatus(201);
     }
     catch (err) {
         console.error(err);
