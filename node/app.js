@@ -6,13 +6,12 @@ var logger = require('morgan');
 var cors = require('cors');
 const dotenv = require('dotenv');
 
-var indexRouter = require('./routes/index');
-var testApiRouter = require('./routes/testApi');
-
+dotenv.config();
 var app = express();
 app.use(cors());
 
-dotenv.config();
+var indexRouter = require('./routes/index');
+var testApiRouter = require('./routes/testApi');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -42,5 +41,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
+console.log("Server started");
 module.exports = app;
