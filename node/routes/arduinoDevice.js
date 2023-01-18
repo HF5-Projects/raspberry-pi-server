@@ -5,11 +5,10 @@ var dbconn = require('../database/dbconn');
 
 router.use(auth);
 
-
 router.get('/', async (req, res) => {
     try {
         const conn = await dbconn.getConnection();
-        const rows = await conn.query(`SELECT * FROM device_logs`);
+        const rows = await conn.query(`SELECT * FROM devices`);
         conn.release();
         res.status(200).send(rows);
     }
@@ -21,11 +20,11 @@ router.get('/', async (req, res) => {
 
 
 
-router.get('/device_id/:id', async (req, res) => {
+router.get('/id/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const conn = await dbconn.getConnection();
-        const rows = await conn.query(`SELECT * FROM device_logs WHERE device_id = ('${id}')`);
+        const rows = await conn.query(`SELECT * FROM devices WHERE id = ('${id}')`);
         conn.release();
         res.status(200).send(rows);
     }
@@ -35,28 +34,11 @@ router.get('/device_id/:id', async (req, res) => {
     }
   })
 
-
-  router.get('/:id', async (req, res) => {
+  router.post('/', async (req, res) => {
     try {
-        const id = req.params.id;
+        const deviceName = req.body.name;
         const conn = await dbconn.getConnection();
-        const rows = await conn.query(`SELECT * FROM device_logs WHERE id = ('${id}')`);
-        conn.release();
-        res.status(200).send(rows);
-    }
-    catch (err) {
-        console.error(err);
-        res.sendStatus(500);
-    }
-  })
-
-
-  router.post('/device_id/:id', async (req, res) => {
-    try {
-        const deviceMessage = req.body.message;
-        const deviceId = req.params.id;
-        const conn = await dbconn.getConnection();
-        const rows = await conn.query(`INSERT INTO device_logs (device_id,message) VALUES ('${deviceId}','${deviceMessage}')`);
+        const rows = await conn.query(`INSERT INTO devices (name) VALUES ('${deviceName}')`);
         conn.release();
         res.sendStatus(201);
     }
@@ -70,9 +52,9 @@ router.get('/device_id/:id', async (req, res) => {
   router.put('/id/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        const message = req.body.newMessage;
+        const devicename = req.body.name;
         const conn = await dbconn.getConnection();
-        const rows = await conn.query(`UPDATE device_logs SET message = ('${message}') WHERE id = ('${id}')`);
+        const rows = await conn.query(`UPDATE devices SET name = ('${devicename}') WHERE id = ('${id}')`);
         conn.release();
         res.sendStatus(200);
     }
@@ -87,7 +69,7 @@ router.get('/device_id/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const conn = await dbconn.getConnection();
-        const rows = await conn.query(`DELETE FROM device_logs WHERE id = ('${id}')`);
+        const rows = await conn.query(`DELETE FROM devices WHERE id = ('${id}')`);
         conn.release();
         res.sendStatus(200);
     }
