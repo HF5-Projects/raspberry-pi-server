@@ -11,7 +11,7 @@ var app = express();
 app.use(cors());
 
 var indexRouter = require('./routes/index');
-var testApiRouter = require('./routes/testApi');
+var arduinoLogs = require('./routes/arduinoLogs');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,7 +24,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/api', testApiRouter);
+app.use('/api/arduinoLogs', arduinoLogs);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
