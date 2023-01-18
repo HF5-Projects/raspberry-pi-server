@@ -59,6 +59,7 @@ router.get('/testApi', async (req, res) => {
         const rows = await conn.query(`DELETE FROM devices WHERE id = ('${id}')`);
         conn.release();
         res.sendStatus(201);
+        res.sendStatus(201);
     }
     catch (err) {
         console.error(err);

@@ -24,3 +24,13 @@ create table if not exists device_logs
     constraint `device_logs_devices_fk`
         foreign key (`device_id`) references devices (`id`)
 );
+
+create table if not exists settings
+(
+    `id`            int unsigned auto_increment,
+    `name`          varchar(255) not null,
+    `value`         varchar(255) not null,
+    `value_type`    varchar(255) not null,
+    constraint `settings_pk`
+        primary key (`id`)
+);
