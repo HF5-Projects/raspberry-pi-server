@@ -54,9 +54,11 @@ router.get('/id/:id', async (req, res) => {
   router.put('/id/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        const devicename = req.body.name;
+        const name = req.body.name;
+        const value = req.body.value;
+        const value_type = req.body.value_type;
         const conn = await dbconn.getConnection();
-        const rows = await conn.query(`UPDATE devices SET name = ('${devicename}') WHERE id = ('${id}')`);
+        const rows = await conn.query(`UPDATE settings SET name = ('${name}'), value = ('${value}'), value_type = ('${value_type}') WHERE id = ('${id}')`);
         conn.release();
         res.sendStatus(200);
     }
