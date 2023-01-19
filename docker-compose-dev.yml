@@ -36,6 +36,15 @@ services:
             - network
         volumes:
             - './node:/usr/src/app'
+    frontend:
+        restart: unless-stopped
+        build:
+            context: './frontend'
+            dockerfile: 'Dockerfile-dev'
+        networks:
+            - network
+        volumes:
+            - './frontend:/usr/src/app'
 networks:
     network:
         driver: bridge
