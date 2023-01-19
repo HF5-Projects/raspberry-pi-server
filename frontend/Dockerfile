@@ -12,6 +12,9 @@ RUN npm run build
 
 COPY . /usr/src/app
 
+EXPOSE 3001
+ENV NUXT_PORT=3001
+
 # Configure host
 ENV HOST 0.0.0.0
 
