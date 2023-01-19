@@ -34,6 +34,13 @@ services:
             dockerfile: 'Dockerfile'
         networks:
             - network
+    frontend:
+        restart: unless-stopped
+        build:
+            context: './frontend'
+            dockerfile: 'Dockerfile'
+        networks:
+            - network
 networks:
     network:
         driver: bridge
