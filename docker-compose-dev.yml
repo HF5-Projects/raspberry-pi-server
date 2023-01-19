@@ -45,6 +45,8 @@ services:
             - network
         volumes:
             - './frontend:/usr/src/app'
+        environment: 
+             - CHOKIDAR_USEPOLLING=true
 networks:
     network:
         driver: bridge
