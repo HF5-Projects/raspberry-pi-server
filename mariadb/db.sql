@@ -31,6 +31,7 @@ create table if not exists settings
     `name`          varchar(255) not null,
     `value`         varchar(255) not null,
     `value_type`    varchar(255) not null,
+    `arduinoSettingOnly` bit,
     constraint `settings_pk`
         primary key (`id`)
 );

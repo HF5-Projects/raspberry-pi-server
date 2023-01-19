@@ -18,7 +18,7 @@ Run `docker-compose exec node|nginx|mariadb /bin/bash` to ssh into the specified
 #### Development
 Run `docker-compose -f docker-compose-dev.yml up --build -d` to start the development server  
 Run `docker-compose -f docker-compose-dev.yml down` to stop the development server  
-Run `docker-compose -f docker-compose-dev.yml logs -f node|nginx|mariadb` to show the logs of the specified container (node|nginx|mariadb) in development  
+Run `docker-compose -f docker-compose-dev.yml logs -f node|nginx|mariadb|frontend` to show the logs of the specified container (node|nginx|mariadb) in development  
 Run `docker-compose -f docker-compose-dev.yml rm` to remove the containers in development. Remember to stop the containers first  
 Run `docker-compose -f docker-compose-dev.yml exec node|nginx|mariadb /bin/bash` to ssh into the specified container (node|nginx|mariadb) in development  
 
