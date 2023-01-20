@@ -19,10 +19,11 @@ router.get('/', async (req, res) => {
   })
 
 
-  router.get('/arduino', async (req, res) => {
+  router.get('/arduino/settings_id/:id', async (req, res) => {
     try {
+        const id = req.params.id;
         const conn = await dbconn.getConnection();
-        const rows = await conn.query(`SELECT * FROM settings WHERE arduinoSettingOnly = 1`);
+        const rows = await conn.query(`SELECT * FROM settings WHERE arduinoSettingOnly = 1 AND id = ?`,[id]);
         conn.release();
         res.status(200).send(rows);
     }
