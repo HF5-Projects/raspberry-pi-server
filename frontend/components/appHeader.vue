@@ -36,10 +36,8 @@
         </div>
         <!--Mobile menu-->
         <div class="mobile-menu" :class="{ hidden: hamburgerHidden }">
-          <nuxt-link to="" class="block py-2 px-2 text-sm hover:bg-gray-200">Forside</nuxt-link>
-          <nuxt-link to="" class="block py-2 px-2 text-sm hover:bg-gray-200">Dagens tilbud</nuxt-link>
-          <nuxt-link to="" class="block py-2 px-2 text-sm hover:bg-gray-200">Login</nuxt-link>
-          <nuxt-link to="" class="block py-2 px-2 text-sm hover:bg-gray-200">Register</nuxt-link>
+          <nuxt-link to="" class="block py-2 px-2 text-sm hover:bg-gray-200">Devices</nuxt-link>
+          <nuxt-link to="" class="block py-2 px-2 text-sm hover:bg-gray-200">Graphs</nuxt-link>
         </div>
       </nav>
     </div>
