@@ -1,9 +1,10 @@
 <template>
-  <Tutorial/>
+  <AppHeader/>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import AppHeader from '~/components/appHeader.vue';
 
-export default Vue.extend({})
+export default Vue.extend({ components: { AppHeader } })
 </script>
