@@ -1,20 +1,15 @@
 <template>
-    <header>
-        <h1>Scuffedware</h1>
-        <ul>
-            <li>
-                <nuxt-link to="/devices">Devices</nuxt-link>
-            </li>
-            <li>
-                <nuxt-link to="/graph">Graph</nuxt-link>
-            </li>
-        </ul>
-    </header>
+    <AppHeader/>
 </template>
 
 <script>
 export default{
-    name: "appHeader"
+    name: "devices",
+    head() {
+        return {
+            title: "Devices"
+        }
+    },
 }
 </script>
 
