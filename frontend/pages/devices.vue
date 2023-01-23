@@ -1,23 +1,10 @@
 <template>
-    <header>
-        <h1>Scuffedware</h1>
-        <ul>
-            <li>
-                <nuxt-link to="/devices">Devices</nuxt-link>
-            </li>
-            <li>
-                <nuxt-link to="/graph">Graph</nuxt-link>
-            </li>
-        </ul>
-    </header>
+    <appHeader/>
 </template>
 
-<script>
-export default{
-    name: "appHeader"
-}
+<script lang="ts">
+import Vue from 'vue'
+import AppHeader from '~/components/appHeader.vue';
+
+export default Vue.extend({ components: { AppHeader } })
 </script>
-
-<style>
-
-</style>

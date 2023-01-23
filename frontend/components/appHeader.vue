@@ -15,7 +15,7 @@
               <!--First nav-->
               <div class="hidden md:flex flex items-center space-x-1">
                 <nuxt-link to="/devices" class="py-5 px-2 text-gray-700 hover:text-gray-900">Devices</nuxt-link>
-                <nuxt-link to="/graph" class="py-5 px-2 text-gray-700 hover:text-gray-900">Graph</nuxt-link>
+                <nuxt-link to="/graphs" class="py-5 px-2 text-gray-700 hover:text-gray-900">Graphs</nuxt-link>
               </div>
             </div>
             <!--second nav-->
@@ -36,10 +36,8 @@
         </div>
         <!--Mobile menu-->
         <div class="mobile-menu" :class="{ hidden: hamburgerHidden }">
-          <nuxt-link to="" class="block py-2 px-2 text-sm hover:bg-gray-200">Forside</nuxt-link>
-          <nuxt-link to="" class="block py-2 px-2 text-sm hover:bg-gray-200">Dagens tilbud</nuxt-link>
-          <nuxt-link to="" class="block py-2 px-2 text-sm hover:bg-gray-200">Login</nuxt-link>
-          <nuxt-link to="" class="block py-2 px-2 text-sm hover:bg-gray-200">Register</nuxt-link>
+          <nuxt-link to="" class="block py-2 px-2 text-sm hover:bg-gray-200">Devices</nuxt-link>
+          <nuxt-link to="" class="block py-2 px-2 text-sm hover:bg-gray-200">Graphs</nuxt-link>
         </div>
       </nav>
     </div>
