@@ -1,8 +1,8 @@
 import Vue from 'vue'
-import { Bar } from 'vue-chartjs'
+import { Line } from 'vue-chartjs'
 
-Vue.component('BarChart', {
-  extends: Bar,
+Vue.component('LineChart', {
+  extends: Line,
   props: {
     data: {
       type: Object,
