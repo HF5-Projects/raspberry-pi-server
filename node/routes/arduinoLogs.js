@@ -56,7 +56,7 @@ router.get('/device_id/:id', async (req, res) => {
         const date1 = req.params.date1;
         const date2 = req.params.date2;
         const conn = await dbconn.getConnection();
-        const rows = await conn.query(`SELECT * FROM device_logs WHERE created_at BETWEEN '${date1}%' AND '${date2}%'`);
+        const rows = await conn.query(`SELECT * FROM device_logs WHERE cast(created_at as DATE) BETWEEN '${date1}%' AND '${date2}%'`);
         conn.release();
         res.status(200).send(rows);
     }
