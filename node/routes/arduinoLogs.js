@@ -51,6 +51,22 @@ router.get('/device_id/:id', async (req, res) => {
   })
 
 
+  router.get('/date/:date', async (req, res) => {
+    try {
+        const date = req.params.date;
+        const conn = await dbconn.getConnection();
+        const rows = await conn.query(`SELECT * FROM device_logs WHERE created_at LIKE '${date}%'`);
+        console.log(date);
+        conn.release();
+        res.status(200).send(rows);
+    }
+    catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+    }
+  })
+
+
   router.post('/device_id/:id', async (req, res) => {
     try {
         const deviceMessage = req.body.message;
