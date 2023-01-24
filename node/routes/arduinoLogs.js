@@ -51,6 +51,22 @@ router.get('/device_id/:id', async (req, res) => {
   })
 
 
+  router.get('/date1/:date1/date2/:date2', async (req, res) => {
+    try {
+        const date1 = req.params.date1;
+        const date2 = req.params.date2;
+        const conn = await dbconn.getConnection();
+        const rows = await conn.query(`SELECT * FROM device_logs WHERE created_at BETWEEN '${date1}%' AND '${date2}%'`);
+        conn.release();
+        res.status(200).send(rows);
+    }
+    catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+    }
+  })
+
+
   router.post('/device_id/:id', async (req, res) => {
     try {
         const deviceMessage = req.body.message;
