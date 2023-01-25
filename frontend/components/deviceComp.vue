@@ -7,11 +7,11 @@
             </div>
             <div class="px-6 pt-4 pb-2">
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    @click="updateDevice">Update Info</button>
+                    @click="updateDevice()">Update Info</button>
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    @click="viewLogs">View Log</button>
+                    @click="viewLogs()">View Log</button>
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    @click="deleteDevice">Delete</button>
+                    @click="deleteDevice()">Delete</button>
             </div>
         </div>
     </div>
@@ -24,13 +24,13 @@ import axios from "axios";
 
 export default {
     name: "DevicesData",
-    props: ["devicesData", "id", "images_path"],
+    props: ["devicesData", "id"],
 
     methods: {
         updateDevice() {
             swal.fire({
                 title: 'Update device infor',
-                html: `<input type="text" id="updateDevice" class="swal2-input" placeholder="Device new name">`,
+                html: `<input type="text" id="updateDevice" class="swal2-input" placeholder="Device new name"><br/><input type="file" id="myFile" name="filename">`,
                 confirmButtonColor: "green",
                 confirmButtonText: 'Update',
                 focusConfirm: false,
@@ -50,37 +50,76 @@ export default {
                         data: {
                             name: result.value.updateDevice
                         }
-                    }).then(()=>{
+                    }).then(() => {
                         this.devicesData.name = result.value.updateDevice;
                     }).catch(err => console.log(err));
                 }
 
             })
         },
-        viewLogs() {
-            swal({
-                title: `ViewLogs!`,
-                text: "Write something interesting:",
-                input: 'text',
-                showCancelButton: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-
+        async viewLogs() {
+            const config = {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJTZXJ2ZXJBUEkiLCJuYW1lIjoiU2VydmVyQVBJVG9rZW4iLCJpYXQiOjE1MTYyMzkwMjIsImV4cCI6MTk2OTAwMjU2MiwiaXNzIjoiU2VydmVyQVBJIiwiYXVkIjoiU2VydmVyQVBJVXNlcnMifQ.yJ7gnG7GXkJvL1oECQ7bdIs5JVC-X1gUUe87q7Wm42U'
                 }
-            })
+            }
+            await axios.get("http://192.168.1.10/api/arduinoLogs/device_id/" + this.devicesData.id, config)
+                .then(res => {
+                    let htmlS = "<table><tr><th>ID</th><th>Device ID</th><th>Message</th><th>Created at</th><th>Updated at</th>";
+
+                    for (let index = 0; index < res.data.length; index++) {
+                        htmlS += "<tr><td>" + res.data[index].id + "</td><td>" + res.data[index].device_id + "</td><td>" + res.data[index].message + "</td><td>" + res.data[index].created_at + "</td><td>" + res.data[index].updated_at + "</td>"
+                    }
+
+                    htmlS += "</tr></table>";
+
+                    swal.fire({
+                        title: this.devicesData.name + ` logs`,
+                        html: htmlS,
+                        customClass: 'swal-wide',
+                    })
+                })
+                .catch(err => console.log(err));
         },
         deleteDevice() {
-            swal({
-                title: `Here's a message!`,
-                text: "Write something interesting:",
-                input: 'text',
-                showCancelButton: true
+            swal.fire({
+                title: 'Are you sure you want to delete ' + this.devicesData.name,
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
+                console.log(this.devicesData.id);
                 if (result.isConfirmed) {
-
+                    axios({
+                        method: 'delete',
+                        url: "http://192.168.1.10/api/arduinoDevice/id/" + this.devicesData.id,
+                        headers: {
+                            'Accept': 'application/json',
+                            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJTZXJ2ZXJBUEkiLCJuYW1lIjoiU2VydmVyQVBJVG9rZW4iLCJpYXQiOjE1MTYyMzkwMjIsImV4cCI6MTk2OTAwMjU2MiwiaXNzIjoiU2VydmVyQVBJIiwiYXVkIjoiU2VydmVyQVBJVXNlcnMifQ.yJ7gnG7GXkJvL1oECQ7bdIs5JVC-X1gUUe87q7Wm42U'
+                        }
+                    }).then(() => {
+                        swal.fire(
+                            'Deleted!',
+                            this.devicesData.name + " has been delete",
+                            'success'
+                        )
+                    }).catch(() => {
+                        swal.fire({
+                            title: 'Error!',
+                            text: 'You cant delete let the device because it has logs',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        })
+                    });
                 }
+
             })
         }
+
     }
 }
 </script>
@@ -91,5 +130,28 @@ export default {
     padding: 1rem;
     border: 1px dotted #ccc;
     margin: 1rem 0;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.swal-wide {
+    width: 900px !important;
+    overflow-y: scroll;
+    max-height: 90vh;
 }
 </style>
