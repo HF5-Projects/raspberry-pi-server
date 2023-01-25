@@ -7,7 +7,7 @@
             <div :class="currentTempColor" class="pt-2" role="alert">
                 <strong class="font-bold">{{ currentTempText }}</strong>
             </div>
-            
+
             <!-- humid -->
             <div :class="currentHumidColor" role="alert">
                 <strong class="font-bold">{{ currentHumidText }}</strong>
@@ -20,10 +20,13 @@
 
             <div class="row-span-5 col-span-1">
                 <div class="p-2 border border-gray-500">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
+                        @click="updateSettings()">Update settings</button>
                     <label class="block mb-2 font-bold"> Server room settings </label>
                     <div v-for="alarmSetting in alarmSettings" :key="alarmSetting.id">
                         <span class="block sm:inline">{{ alarmSetting.name }}: </span>
                         <span class="block sm:inline font-bold">{{ alarmSetting.value }}</span>
+                        <span class="block sm:inline"> {{ alarmSetting.value_type }}</span>
                     </div>
                 </div>
             </div>
@@ -38,6 +41,7 @@
 
 <script>
 import axios from "axios";
+import swal from "sweetalert2";
 
 export default {
     name: "alarms",
@@ -107,9 +111,6 @@ export default {
                 this.newestTemp = res.data.filter(device => device.device_id === 1).sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0].message;
                 this.newestHum = res.data.filter(device => device.device_id === 3).sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0].message;
                 this.newestSound = res.data.filter(device => device.device_id === 2).sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0].message;
-                console.log(this.newestTemp);
-                console.log(this.newestHum);
-                console.log(this.newestSound);
             })
             .catch(err => console.log(err));
         await axios.get(`http://192.168.1.10/api/settings`, config)
@@ -161,6 +162,47 @@ export default {
                 this.currentSoundColor = this.soundColors.success;
                 this.currentSoundText = this.soundTexts.success;
             }
+        },
+        async updateSettings() {
+            const config = {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJTZXJ2ZXJBUEkiLCJuYW1lIjoiU2VydmVyQVBJVG9rZW4iLCJpYXQiOjE1MTYyMzkwMjIsImV4cCI6MTk2OTAwMjU2MiwiaXNzIjoiU2VydmVyQVBJIiwiYXVkIjoiU2VydmVyQVBJVXNlcnMifQ.yJ7gnG7GXkJvL1oECQ7bdIs5JVC-X1gUUe87q7Wm42U'
+                }
+            }
+            swal.fire({
+                title: 'Update settings',
+                html: this.alarmSettings.map(x => `<div input-group> <label class="font-bold float-left">${x.name}</label> <input type="number" id="${x.name}" class="swal2-input float-right" value="${x.value}"></div>`).join(''),
+                confirmButtonColor: "green",
+                confirmButtonText: 'Update',
+                focusConfirm: false,
+                preConfirm: (res) => {
+                    const updatedSettings = this.alarmSettings.map(x => {
+                        return {
+                            id: x.id,
+                            name: x.name,
+                            value: document.getElementById(x.name).value
+                        }
+                    });
+                    return { updatedSettings };
+                }
+            }).then((result) => {
+                if (result.value) {
+                    result.value.updatedSettings.forEach(async (x) => {
+                        await axios.put(`http://192.168.1.10/api/settings/id/${x.id}`, x, config)
+                            .then(res => {
+                            })
+                            .catch(err => console.log(err));
+                    });
+                }
+            }).then(async () => {
+                await axios.get(`http://192.168.1.10/api/settings`, config)
+                    .then(res => {
+                        this.alarmSettings = res.data;
+                        this.setAlerts();
+                    })
+                    .catch(err => console.log(err));
+            });
         }
     }
 }
