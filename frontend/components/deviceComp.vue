@@ -69,7 +69,7 @@ export default {
                     let htmlS = "<table><tr><th>ID</th><th>Device ID</th><th>Message</th><th>Created at</th><th>Updated at</th>";
 
                     for (let index = 0; index < res.data.length; index++) {
-                        htmlS += "<tr><td>" + res.data[index].id + "</td><td>" + res.data[index].device_id + "</td><td>" + res.data[index].message + "</td><td>" + res.data[index].created_at + "</td><td>" + res.data[index].updated_at + "</td>"
+                        htmlS += "<tr><td>" + res.data[index].id + "</td><td>" + res.data[index].device_id + "</td><td>" + res.data[index].message + "</td><td>" + new Date(res.data[index].created_at).toLocaleString() + "</td><td>" + new Date(res.data[index].updated_at).toLocaleString() + "</td></tr>"
                     }
 
                     htmlS += "</tr></table>";
