@@ -24,7 +24,7 @@ router.get('/id/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const conn = await dbconn.getConnection();
-        const rows = await conn.query(`SELECT * FROM devices WHERE id = ('${id}')`);
+        const rows = await conn.query(`SELECT * FROM devices WHERE id = ? ORDER BY created_at DESC`, [id]);
         conn.release();
         res.status(200).send(rows);
     }
@@ -38,7 +38,7 @@ router.get('/id/:id', async (req, res) => {
     try {
         const deviceName = req.body.name;
         const conn = await dbconn.getConnection();
-        const rows = await conn.query(`INSERT INTO devices (name) VALUES ('${deviceName}')`);
+        const rows = await conn.query(`INSERT INTO devices (name) VALUES (?)`, [deviceName]);
         conn.release();
         res.sendStatus(201);
     }
@@ -54,7 +54,7 @@ router.get('/id/:id', async (req, res) => {
         const id = req.params.id;
         const devicename = req.body.name;
         const conn = await dbconn.getConnection();
-        const rows = await conn.query(`UPDATE devices SET name = ('${devicename}') WHERE id = ('${id}')`);
+        const rows = await conn.query(`UPDATE devices SET name = ? WHERE id = ?`, [devicename, id]);
         conn.release();
         res.sendStatus(200);
     }
@@ -69,7 +69,7 @@ router.get('/id/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const conn = await dbconn.getConnection();
-        const rows = await conn.query(`DELETE FROM devices WHERE id = ('${id}')`);
+        const rows = await conn.query(`DELETE FROM devices WHERE id = ?`, [id]);
         conn.release();
         res.sendStatus(200);
     }
