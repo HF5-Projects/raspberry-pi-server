@@ -8,9 +8,10 @@ RUN apt update && apt upgrade -y
 COPY package.json /usr/src/app/
 
 RUN npm install
-RUN npm run build
 
 COPY . /usr/src/app
+
+RUN npm run build
 
 EXPOSE 3001
 ENV NUXT_PORT=3001
