@@ -23,7 +23,7 @@ export default {
         devices: {}
       }
     },
-    async fetch() {
+    async fetch() { 
         const config = {
             headers: {
                 'Accept': 'application/json',

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class=" ml-4 max-w-sm rounded overflow-hidden shadow-lg">
-            <img class="w-full" :src="'~/assets/images/'+ devicesData.images_path" :alt="devicesData.name">
+            <img class="w-full" :src="devicesData.images_path" :alt="devicesData.name">
             <div class="px-6 py-4">
                 <div class="font-bold text-xl mb-2">{{ devicesData.name }}</div>
             </div>
