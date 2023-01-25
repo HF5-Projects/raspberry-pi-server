@@ -12,9 +12,10 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
+    "chart.js": "2.9.4",
     "core-js": "^3.15.1",
     "nuxt": "^2.15.7",
-    "chart.js": "2.9.4",
+    "sweetalert2": "^11.7.0",
     "vue-chartjs": "^3.5.1"
   },
   "devDependencies": {
