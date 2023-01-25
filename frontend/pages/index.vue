@@ -1,26 +1,14 @@
 <template>
    <div>
   <AppHeader/>
-    <div class="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
-      <div class="grid grid-cols-2 row-gap-8 md:grid-cols-3">
-        <div class="text-center md:border-r">
+    <div class="px-4 py-16 mx-auto sm:max-w-xl">
+      <div class="grid grid-cols-2 row-gap-8 md:grid-cols-1">
+        <div class="text-center md:border-l md:border-r">
           <h6 class="text-4xl font-bold lg:text-5xl xl:text-6xl" v-if="deviceLogs1.length > 0 && deviceLogs3.length > 0">
              {{ deviceLogs1[0].message }}&#8451; / {{ deviceLogs3[0].message }}%
           </h6>
           <p class="text-sm font-medium tracking-widest text-gray-800 uppercase lg:text-base">
             Current Temperature / Humidity
-          </p>
-        </div>
-        <div class="text-center md:border-r">
-          <h6 class="text-4xl font-bold lg:text-5xl xl:text-6xl">12</h6>
-          <p class="text-sm font-medium tracking-widest text-gray-800 uppercase lg:text-base">
-            Active Alerts
-          </p>
-        </div>
-        <div class="text-center">
-          <h6 class="text-4xl font-bold lg:text-5xl xl:text-6xl">5</h6>
-          <p class="text-sm font-medium tracking-widest text-gray-800 uppercase lg:text-base">
-            Active Alarms
           </p>
         </div>
       </div>
@@ -87,8 +75,8 @@ export default {
             const currentTime = new Date();
             const logTime = new Date(this.deviceLogs1[0].created_at);
             const diffTime = currentTime - logTime;
-            const diffMinutes = diffTime / (1000 * 60);
-            return diffMinutes > 60;
+            const diffMinutes = diffTime / (1000 * 1);
+            return diffMinutes > 1;
         }
     },
   }
