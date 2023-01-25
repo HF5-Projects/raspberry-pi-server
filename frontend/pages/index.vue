@@ -76,8 +76,6 @@ export default {
               .reduce((unique, item) => { // reduce to only one entry
                   return unique.find(log => log.device_id === item.device_id) ? unique : [...unique, item];
               }, []);
-          console.log(this.deviceLogs1);
-          console.log(this.deviceLogs3);
         })
         .catch(err => console.log(err));
     },
