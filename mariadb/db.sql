@@ -6,6 +6,7 @@ create table if not exists devices
 (
     `id`            int unsigned auto_increment,
     `name`          varchar(255) not null,
+    `images_path`   varchar(255),
     `created_at`    timestamp not null default CURRENT_TIMESTAMP(),
     `updated_at`    timestamp not null default CURRENT_TIMESTAMP() on update CURRENT_TIMESTAMP(),
     constraint `devices_pk`

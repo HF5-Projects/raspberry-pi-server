@@ -1,9 +1,7 @@
 <template>
     <div>
         <div class=" ml-4 max-w-sm rounded overflow-hidden shadow-lg">
-            <img class="w-full"
-                src="https://steamuserimages-a.akamaihd.net/ugc/1750183799181736693/5A15EC022D48EFBF3C06C0AD1D824F293110B6A1/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
-                alt="Sunset in the mountains">
+            <img class="w-full" :src="devicesData.images_path" :alt="devicesData.name">
             <div class="px-6 py-4">
                 <div class="font-bold text-xl mb-2">{{ devicesData.name }}</div>
             </div>
@@ -26,7 +24,7 @@ import axios from "axios";
 
 export default {
     name: "DevicesData",
-    props: ["devicesData", "id"],
+    props: ["devicesData", "id", "images_path"],
 
     methods: {
         updateDevice() {

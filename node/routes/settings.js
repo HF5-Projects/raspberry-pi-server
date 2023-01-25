@@ -16,14 +16,14 @@ router.get('/', async (req, res) => {
         console.error(err);
         res.sendStatus(500);
     }
-  })
+})
 
 
-  router.get('/arduino/settings_id/:id', async (req, res) => {
+router.get('/arduino/settings_id/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const conn = await dbconn.getConnection();
-        const rows = await conn.query(`SELECT * FROM settings WHERE arduinoSettingOnly = 1 AND id = ?`,[id]);
+        const rows = await conn.query(`SELECT * FROM settings WHERE arduinoSettingOnly = 1 AND id = ?`, [id]);
         conn.release();
         res.status(200).send(rows);
     }
@@ -31,7 +31,7 @@ router.get('/', async (req, res) => {
         console.error(err);
         res.sendStatus(500);
     }
-  })
+})
 
 
 
@@ -39,7 +39,7 @@ router.get('/id/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const conn = await dbconn.getConnection();
-        const rows = await conn.query(`SELECT * FROM settings WHERE id = ('${id}')`);
+        const rows = await conn.query(`SELECT * FROM settings WHERE id = ?`, [id]);
         conn.release();
         res.status(200).send(rows);
     }
@@ -47,15 +47,15 @@ router.get('/id/:id', async (req, res) => {
         console.error(err);
         res.sendStatus(500);
     }
-  })
+})
 
-  router.post('/', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const name = req.body.name;
         const value = req.body.value;
         const value_type = req.body.value_type;
         const conn = await dbconn.getConnection();
-        const rows = await conn.query(`INSERT INTO settings (name,value,value_type) VALUES ('${name}','${value}','${value_type}')`);
+        const rows = await conn.query(`INSERT INTO settings (name,value,value_type) VALUES ?,?,?`, [name, value, value_type]);
         conn.release();
         res.sendStatus(201);
     }
@@ -63,17 +63,32 @@ router.get('/id/:id', async (req, res) => {
         console.error(err);
         res.sendStatus(500);
     }
-  })
+})
 
 
-  router.put('/id/:id', async (req, res) => {
+router.put('/id/:id', async (req, res) => {
+    try {
+        const id = req.params.id || null;
+        const name = req.body.name || null;
+        const value = req.body.value || null;
+        const value_type = req.body.value_type || null;
+        const conn = await dbconn.getConnection();
+        const rows = await conn.query(`UPDATE settings SET name = IFNULL(?,name), value = IFNULL(?,value), value_type = IFNULL(?,value_type) WHERE id = ?`, [name, value, value_type, id]);
+        conn.release();
+        res.sendStatus(200);
+    }
+    catch (err) {
+        console.error(err);
+        res.sendStatus(500); 
+    }
+})
+
+
+router.delete('/id/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        const name = req.body.name;
-        const value = req.body.value;
-        const value_type = req.body.value_type;
         const conn = await dbconn.getConnection();
-        const rows = await conn.query(`UPDATE settings SET name = ('${name}'), value = ('${value}'), value_type = ('${value_type}') WHERE id = ('${id}')`);
+        const rows = await conn.query(`DELETE FROM settings WHERE id = ?`, [id]);
         conn.release();
         res.sendStatus(200);
     }
@@ -81,21 +96,6 @@ router.get('/id/:id', async (req, res) => {
         console.error(err);
         res.sendStatus(500);
     }
-  })
-
-
-  router.delete('/id/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        const conn = await dbconn.getConnection();
-        const rows = await conn.query(`DELETE FROM settings WHERE id = ('${id}')`);
-        conn.release();
-        res.sendStatus(200);
-    }
-    catch (err) {
-        console.error(err);
-        res.sendStatus(500);
-    }
-  })
+})
 
 module.exports = router;
