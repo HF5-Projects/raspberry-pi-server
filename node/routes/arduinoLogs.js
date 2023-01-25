@@ -25,7 +25,7 @@ router.get('/device_id/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const conn = await dbconn.getConnection();
-        const rows = await conn.query(`SELECT * FROM device_logs WHERE device_id = ('${id}')`);
+        const rows = await conn.query(`SELECT * FROM device_logs WHERE device_id = ? ORDER BY created_at DESC`, [id]);
         conn.release();
         res.status(200).send(rows);
     }
@@ -40,7 +40,7 @@ router.get('/device_id/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const conn = await dbconn.getConnection();
-        const rows = await conn.query(`SELECT * FROM device_logs WHERE id = ('${id}')`);
+        const rows = await conn.query(`SELECT * FROM device_logs WHERE id = ?`, [id]);
         conn.release();
         res.status(200).send(rows);
     }
@@ -72,7 +72,7 @@ router.get('/device_id/:id', async (req, res) => {
         const deviceMessage = req.body.message;
         const deviceId = req.params.id;
         const conn = await dbconn.getConnection();
-        const rows = await conn.query(`INSERT INTO device_logs (device_id,message) VALUES ('${deviceId}','${deviceMessage}')`);
+        const rows = await conn.query(`INSERT INTO device_logs (device_id,message) VALUES (?,?)`, [deviceId, deviceMessage]);
         conn.release();
         res.sendStatus(201);
     }
@@ -88,7 +88,7 @@ router.get('/device_id/:id', async (req, res) => {
         const id = req.params.id;
         const message = req.body.newMessage;
         const conn = await dbconn.getConnection();
-        const rows = await conn.query(`UPDATE device_logs SET message = ('${message}') WHERE id = ('${id}')`);
+        const rows = await conn.query(`UPDATE device_logs SET message = ? WHERE id = ?`, [message, id]);
         conn.release();
         res.sendStatus(200);
     }
@@ -103,7 +103,7 @@ router.get('/device_id/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const conn = await dbconn.getConnection();
-        const rows = await conn.query(`DELETE FROM device_logs WHERE id = ('${id}')`);
+        const rows = await conn.query(`DELETE FROM device_logs WHERE id = ?`, [id]);
         conn.release();
         res.sendStatus(200);
     }
