@@ -150,6 +150,9 @@ export default {
         await axios.get(`http://192.168.1.10/api/arduinoLogs/date1/${this.current_date[0]}/date2/${this.current_date[1]}`, config)
             .then(res => {
                 this.deviceLogs = res.data;
+                this.deviceLogs.sort((a, b) => {
+                    return new Date(a.created_at) - new Date(b.created_at);
+                });
             })
             .catch(err => console.log(err));
     },
