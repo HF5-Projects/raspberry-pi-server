@@ -16,6 +16,7 @@
               <div class="hidden md:flex flex items-center space-x-1">
                 <nuxt-link to="/devices" class="py-5 px-2 text-gray-700 hover:text-gray-900">Devices</nuxt-link>
                 <nuxt-link to="/graphs" class="py-5 px-2 text-gray-700 hover:text-gray-900">Graphs</nuxt-link>
+                <nuxt-link to="/alarms" class="py-5 px-2 text-gray-700 hover:text-gray-900">Alarms</nuxt-link>
               </div>
             </div>
             <!--second nav-->
@@ -38,6 +39,7 @@
         <div class="mobile-menu" :class="{ hidden: hamburgerHidden }">
           <nuxt-link to="" class="block py-2 px-2 text-sm hover:bg-gray-200">Devices</nuxt-link>
           <nuxt-link to="" class="block py-2 px-2 text-sm hover:bg-gray-200">Graphs</nuxt-link>
+          <nuxt-link to="" class="block py-2 px-2 text-sm hover:bg-gray-200">Alarms</nuxt-link>
         </div>
       </nav>
     </div>
